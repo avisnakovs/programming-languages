@@ -18,11 +18,17 @@ fun number_in_month (d : (int * int * int) list, m : int) =
 
 
 fun dates_in_months (d : (int*int*int) list, c : int list) =
-    if null d 
-    then []
-    else (if contains(c, #3 (hd d)) 
-	  then hd d :: dates_in_months(tl d, c)
-	  else dates_in_months(tl d, c))
+    let
+        fun dates (d : (int*int*int) list) =
+            if null d
+            then []
+            else
+                (if contains(c, #2 (hd d)) 
+	         then hd d :: dates(tl d)
+	         else dates(tl d))
+    in
+        dates(d)
+    end
 
 fun dates_in_month (d : (int*int*int) list, c : int) =
     dates_in_months(d, [c])
