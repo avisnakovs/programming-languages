@@ -24,6 +24,9 @@ fun dates_in_months (d : (int*int*int) list, c : int list) =
 	  then hd d :: dates_in_months(tl d, c)
 	  else dates_in_months(tl d, c))
 
+fun dates_in_month (d : (int*int*int) list, c : int) =
+    dates_in_months(d, [c])
+             
 fun get_nth (l : string list, n : int) =
     let
         fun find(s : string list, count : int) = 
