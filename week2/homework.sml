@@ -65,3 +65,15 @@ fun month_range (day1 : int, day2 : int) =
     if day1 > day2
     then []
     else what_month(day1) :: month_range(day1 + 1, day2) 
+
+fun oldest (d : (int * int * int) list) =
+    if null d
+    then NONE
+    else
+        let
+            val tail_oldest = oldest(tl d)
+        in
+            if not(isSome tail_oldest) orelse is_older(hd d, valOf tail_oldest)
+            then SOME (hd d)
+            else tail_oldest
+        end
