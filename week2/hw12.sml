@@ -30,5 +30,5 @@ fun min_max (a : int list) =
                 mm(tl a, minT, maxT)
             end
     in 
-        mm(a, hd a, hd a)
+        mm(tl a, hd a, hd a)
     end
