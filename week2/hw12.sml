@@ -9,3 +9,10 @@
     in
         alt(l, true)
     end
+	
+fun sortedMerge (a : int list, b : int list) =
+	if null a andalso null b then []
+	else if null a then b
+	else if null b then a
+    else if hd a < hd b then hd a :: sortedMerge(tl a, b)
+    else hd b :: sortedMerge(a, tl b)
