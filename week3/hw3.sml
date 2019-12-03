@@ -22,12 +22,12 @@ exception IllegalMove
               (* put your solutions for problem 2 here *)
 
 fun all_except_option (s, xs) =
-    let fun helper ys =
+    let fun helper (ys, acc) =
             case ys of
-                y::[] => if same_string(y, s) then [] else [y]
-              | y::ys' => if same_string(y, s) then helper ys' else helper(y::ys);
+                y::[] => if same_string(y, s) then acc else y::acc
+              | y::ys' => if same_string(y, s) then helper (ys', acc) else helper(ys', y::acc);
     in
         case xs of
             [] => NONE
-          | _ => SOME(helper(xs))
+          | _ => SOME(helper(xs, []))
     end
