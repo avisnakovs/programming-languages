@@ -22,7 +22,6 @@ exception IllegalMove
               (* put your solutions for problem 2 here *)
 
 fun merge ([], l2) = l2
-  | merge (x::[], l2) = x::l2
   | merge (x::xs', l2) = x::merge(xs', l2)
               
 fun all_except_option (s, xs) =
@@ -45,7 +44,6 @@ fun get_substitutions1 (lists, s) =
     in
         case lists of
             [] => []
-          | l::[] => list_from_option(all_except_option(s, l))
           | l::lists' => merge(list_from_option(all_except_option(s, l)), get_substitutions1(lists', s))
     end
 
