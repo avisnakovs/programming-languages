@@ -34,9 +34,9 @@ fun all_except_option (s, xs) =
     end
 
 
+        
 fun get_substitutions1 (lists, s) =
-    let
-        fun list_from_option (NONE) = []
+    let fun list_from_option (NONE) = []
           | list_from_option (SOME (l)) = l
     in
         case lists of
@@ -44,3 +44,13 @@ fun get_substitutions1 (lists, s) =
           | l::lists' => list_from_option(all_except_option(s, l)) @ get_substitutions1(lists', s)
     end
 
+fun get_substitutions2 (lists, s) =
+    let fun lfo (NONE) = []
+          | lfo (SOME (l)) = l
+        fun helper (lists, acc) =
+            case lists of
+                [] => acc
+              | l::lists' => helper(lists', lfo(all_except_option(s,l)) @ acc)
+    in
+        helper(lists, [])
+    end
