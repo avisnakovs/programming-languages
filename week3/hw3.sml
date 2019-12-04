@@ -21,13 +21,10 @@ exception IllegalMove
 
               (* put your solutions for problem 2 here *)
 
-fun merge ([], l2) = l2
-  | merge (x::xs', l2) = x::merge(xs', l2)
-              
 fun all_except_option (s, xs) =
     let fun helper (ys, acc, found) =
             case ys of
-                y::[] => if same_string(y, s) then (acc, true) else (y::acc, found)
+                [] => (acc, found)
               | y::ys' => if same_string(y, s) then helper (ys', acc, true) else helper(ys', y::acc, found)
     in
         case xs of
@@ -44,6 +41,6 @@ fun get_substitutions1 (lists, s) =
     in
         case lists of
             [] => []
-          | l::lists' => merge(list_from_option(all_except_option(s, l)), get_substitutions1(lists', s))
+          | l::lists' => list_from_option(all_except_option(s, l)) @ get_substitutions1(lists', s)
     end
 
