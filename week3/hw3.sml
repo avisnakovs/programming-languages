@@ -1,4 +1,4 @@
-(* Dan Grossman, Coursera PL, HW2 Provided Code *)
+(* dan grossman, coursera pl, hw2 provided code *)
 
 (* if you use this function to compare two strings (returns true if the same
    string), then you avoid several of the functions in problem 1 having
@@ -33,24 +33,17 @@ fun all_except_option (s, xs) =
                      (acc, found) => if found then SOME acc else NONE
     end
 
-
+fun list_from_option (NONE) = []
+  | list_from_option (SOME (l)) = l
         
 fun get_substitutions1 (lists, s) =
-    let fun list_from_option (NONE) = []
-          | list_from_option (SOME (l)) = l
-    in
-        case lists of
-            [] => []
-          | l::lists' => list_from_option(all_except_option(s, l)) @ get_substitutions1(lists', s)
-    end
-
+    case lists of
+        [] => []
+      | l::lists' => list_from_option(all_except_option(s, l)) @ get_substitutions1(lists', s)
+        
 fun get_substitutions2 (lists, s) =
-    let fun lfo (NONE) = []
-          | lfo (SOME (l)) = l
-        fun helper (lists, acc) =
-            case lists of
-                [] => acc
-              | l::lists' => helper(lists', lfo(all_except_option(s,l)) @ acc)
+    let fun helper [] => acc
+          | helper (l::lists) =  helper(lists', list_from_option(all_except_option(s,l)) @ acc)
     in
         helper(lists, [])
     end
