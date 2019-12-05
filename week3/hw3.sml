@@ -77,3 +77,10 @@ fun all_same_color [] = true
   | all_same_color(_::[]) = true
   | all_same_color((s,_)::(s2,r2)::cs) = if card_color(s) <> card_color(s2) then false else all_same_color((s2,r2)::cs)
     
+fun sum_cards cards =
+    let fun sum ([], acc) = acc
+          | sum ((s, r)::cs, acc) = sum(cs, acc + card_value(r))
+    in
+        sum(cards, 0)
+    end
+            
