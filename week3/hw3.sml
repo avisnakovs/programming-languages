@@ -55,8 +55,8 @@ fun similar_names (lists, {first, middle, last}) =
         {first=first, middle=middle, last=last}::full_names(get_substitutions2(lists, first))
     end
         
-fun card_color card =
-    case card of
+fun card_color suit =
+    case suit of
         (Clubs) => Black
       | (Diamonds) => Red
       | (Hearts) => Red
@@ -72,3 +72,8 @@ fun remove_card (cs, c, e) =
     case all_except_option(c, cs) of
         NONE => raise e
       | SOME(cs') => cs'
+
+fun all_same_color [] = true
+  | all_same_color(_::[]) = true
+  | all_same_color((s,_)::(s2,r2)::cs) = if card_color(s) <> card_color(s2) then false else all_same_color((s2,r2)::cs)
+    
