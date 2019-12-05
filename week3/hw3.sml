@@ -42,8 +42,8 @@ fun get_substitutions1 (lists, s) =
       | l::lists' => list_from_option(all_except_option(s, l)) @ get_substitutions1(lists', s)
         
 fun get_substitutions2 (lists, s) =
-    let fun helper [] => acc
-          | helper (l::lists) =  helper(lists', list_from_option(all_except_option(s,l)) @ acc)
+    let fun helper ([], acc) = acc
+          | helper (l::lists, acc) =  helper(lists, list_from_option(all_except_option(s,l)) @ acc)
     in
         helper(lists, [])
     end
@@ -55,3 +55,10 @@ fun similar_names (lists, {first, middle, last}) =
         {first=first, middle=middle, last=last}::full_names(get_substitutions2(lists, first))
     end
         
+fun card_color card =
+    case card of
+        (Clubs) => Black
+      | (Diamonds) => Red
+      | (Hearts) => Red
+      | (Spades) => Black
+
