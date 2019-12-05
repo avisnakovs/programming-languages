@@ -54,3 +54,11 @@ fun get_substitutions2 (lists, s) =
     in
         helper(lists, [])
     end
+
+fun similar_names (lists, {first, middle, last}) =
+    let fun full_names [] = []
+          | full_names (n::ns) = (n, last, middle)::full_names(ns) 
+    in                                   
+        full_names(get_substitutions2(lists, first))
+    end
+        
