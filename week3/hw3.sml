@@ -84,3 +84,20 @@ fun sum_cards cards =
         sum(cards, 0)
     end
             
+fun score (cards, goal) =
+    let val sum = sum_cards(cards)
+    in if sum > goal then sum - goal else goal - sum
+    end
+
+fun officiate (cards, moves, goal) =
+    let
+        fun game (cards, [], held, sum) = (held, sum)
+          | game ([], moves, held, sum) = (held, sum)
+          | game ((dsuit, drank)::cards, m::moves, held, sum) =
+            case m of
+                Discard(suit, rank) => game((dsuit, drank)::cards, moves, remove_card(held, (suit, rank), IllegalMove), sum - card_value(rank))
+             | Draw => game(remove_card((dsuit, drank)::cards, (dsuit, drank), IllegalMove), moves, (dsuit, drank)::held, card_value(drank) + sum) 
+    in
+        case game(cards, moves, [], 0) of
+            (held, sum) => sum
+    end
