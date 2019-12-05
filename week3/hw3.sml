@@ -25,7 +25,7 @@ fun all_except_option (s, xs) =
     let fun helper (ys, acc, found) =
             case ys of
                 [] => (acc, found)
-              | y::ys' => if same_string(y, s) then helper (ys', acc, true) else helper(ys', y::acc, found)
+              | y::ys' => if y = s andalso not found  then helper (ys', acc, true) else helper(ys', y::acc, found)
     in
         case xs of
             [] => NONE
@@ -62,3 +62,13 @@ fun card_color card =
       | (Hearts) => Red
       | (Spades) => Black
 
+fun card_value rank =
+    case rank of
+        Num(n) => n
+      | Ace => 11
+      | _ => 10
+
+fun remove_card (cs, c, e) =
+    case all_except_option(c, cs) of
+        NONE => raise e
+      | SOME(cs') => cs'
