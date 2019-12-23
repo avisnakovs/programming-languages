@@ -54,7 +54,7 @@ val longest_string3 = longest_string_helper (fn (x, y) => if  String.size(x) > S
 
 val longest_string4 = longest_string_helper (fn (x, y) => if String.size(y) > String.size(x) then y else x)
                                             
-
+val longest_capitalized = longest_string1 o only_capitals
                                             
 
                                             
