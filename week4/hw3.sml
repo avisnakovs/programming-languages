@@ -86,4 +86,22 @@ fun distinct l =
       | hd::tl => (not (List.exists (fn x => hd = x) tl)) andalso (distinct tl) 
     
 val check_pat = distinct o all_strings
-    
+
+fun match_h (v, p) =
+    let
+        fun match_list (v::vv, p::pp) = match_h(v, p) @ match_list(vv, pp)
+          | match_list ([], []) = [] 
+    in
+    case p of
+        Wildcard => []
+      | Variable x => [(x, v)]
+      | UnitP => (case v of Unit => [] | _ => raise NoAnswer)
+      | ConstP x => (case v of Const c => if x = c then [] else raise NoAnswer | _ => raise NoAnswer)
+      | TupleP ps => (case v of Tuple vs => match_list(vs, ps) | _ => raise NoAnswer)
+      | ConstructorP(s1, p1) => (case v of Constructor(s2, v2) =>
+                                          (if s1 = s2
+                                           then match_h(v2, p1)
+                                           else raise NoAnswer) 
+                                       | _ => raise NoAnswer) 
+    end
+                               
