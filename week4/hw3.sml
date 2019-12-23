@@ -104,4 +104,6 @@ fun match_h (v, p) =
                                            else raise NoAnswer) 
                                        | _ => raise NoAnswer) 
     end
-                               
+
+fun match (v, p) =
+    SOME(match_h(v, p)) handle NoAnswer => NONE
