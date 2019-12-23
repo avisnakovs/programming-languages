@@ -61,7 +61,11 @@ val rev_string = String.implode o List.rev o String.explode
 fun first_answer f l
     = hd (List.filter (fn x => case x of NONE => false | _ => true) (List.map f l))
 
-         
+fun all_answers f l =
+    case (List.filter (fn x => case x of NONE => false | _ => true) (List.map f l)) of
+        [] => NONE
+      | filtered => SOME(List.map (fn x => valOf x) filtered)
+                             
                                          
 
                                             
