@@ -97,7 +97,7 @@ fun officiate (cards, moves, goal) =
             case (m, sum > goal) of
                 (_, true) => (held, sum)
              | (Discard(suit, rank), _) => game((dsuit, drank)::cards, moves, remove_card(held, (suit, rank), IllegalMove), sum - card_value(rank))
-             | (Draw, _)c => game(remove_card((dsuit, drank)::cards, (dsuit, drank), IllegalMove), moves, (dsuit, drank)::held, card_value(drank) + sum) 
+             | (Draw, _) => game(remove_card((dsuit, drank)::cards, (dsuit, drank), IllegalMove), moves, (dsuit, drank)::held, card_value(drank) + sum) 
     in
         case game(cards, moves, [], 0) of
             (held, sum) => case (all_same_color(held), (sum > goal)) of
