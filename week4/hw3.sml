@@ -107,3 +107,6 @@ fun match_h (v, p) =
 
 fun match (v, p) =
     SOME(match_h(v, p)) handle NoAnswer => NONE
+
+fun first_match v ps =
+    first_answer (fn x => match(v,x)) ps
