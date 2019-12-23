@@ -66,19 +66,24 @@ fun all_answers f l =
         [] => NONE
       | filtered => SOME(List.map (fn x => valOf x) filtered)
 
-fun count () =
-    let
-        val n = 0
-        fun inc () = n + 1
-    in inc()
-    end 
+val count_wildcards = g (fn () => 1) (fn x => 0)
 
-val count_wildcards = g count (fn x => 0)
-
-val count_wild_and_variable_lengths = g count (fn x => String.size(x))
+val count_wild_and_variable_lengths = g (fn () => 1) (fn x => String.size(x))
 
 fun count_some_var (s, p)
-    =  g (fn () => 0) (fn x => if x = s then 1 else 0) p
+    = g (fn () => 0) (fn x => if x = s then 1 else 0) p
+
+fun all_strings p = 
+    case p of
+        Variable x        => [x]
+      | TupleP ps         => List.foldl (fn (p,i) => (all_strings p) @ i) [] ps
+      | ConstructorP(_,p) => all_strings p
+      | _                 => []
+
+fun distinct l =
+    case l of
+        [] => true
+      | hd::tl => (not (List.exists (fn x => hd = x) tl)) andalso (distinct tl) 
     
-
-
+val check_pat = distinct o all_strings
+    
