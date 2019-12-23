@@ -65,7 +65,18 @@ fun all_answers f l =
     case (List.filter (fn x => case x of NONE => false | _ => true) (List.map f l)) of
         [] => NONE
       | filtered => SOME(List.map (fn x => valOf x) filtered)
-                             
-                                         
 
-                                            
+fun count () =
+    let
+        val n = 0
+        fun inc () = n + 1
+    in inc()
+    end 
+
+val count_wildcards = g count (fn x => 0)
+
+val count_wild_and_variable_lengths = g count (fn x => String.size(x))
+                                        
+    
+
+
