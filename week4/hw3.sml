@@ -58,7 +58,10 @@ val longest_capitalized = longest_string1 o only_capitals
 
 val rev_string = String.implode o List.rev o String.explode
 
-                                                 
-    
+fun first_answer f l
+    = hd (List.filter (fn x => case x of NONE => false | _ => true) (List.map f l))
+
+         
+                                         
 
                                             
