@@ -58,8 +58,13 @@ val longest_capitalized = longest_string1 o only_capitals
 
 val rev_string = String.implode o List.rev o String.explode
 
-fun first_answer f l
-    = hd (List.filter (fn x => case x of NONE => false | _ => true) (List.map f l))
+fun first_answer f l =
+    let fun first_some () = hd (List.filter (fn x => case x of NONE => false | _ => true) (List.map f l))
+    in
+        case first_some() of
+            NONE => raise NoAnswer
+          | SOME x => x
+    end
 
 fun all_answers f l =
     case (List.filter (fn x => case x of NONE => false | _ => true) (List.map f l)) of
@@ -109,4 +114,4 @@ fun match (v, p) =
     SOME(match_h(v, p)) handle NoAnswer => NONE
 
 fun first_match v ps =
-    first_answer (fn x => match(v,x)) ps
+    SOME(first_answer (fn x => match(v,x)) ps) handle NoAnswer => NONE
