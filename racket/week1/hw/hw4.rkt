@@ -24,4 +24,16 @@
           (car xs)
           (nth (cdr xs) n (+ acc 1)))))
 
+(define (stream-for-n-steps s n)
+  (letrec ([f (lambda (stream seq acc)
+                (let ([pr (stream)])
+                  (if (= n seq)
+                      null
+                      (cons acc (f (cdr pr) (+ seq 1) (car pr))))))])
+    (f (cdr (s)) 0 (car (s)))))
+
+(define powers-of-two
+  (letrec ([f (lambda (x) (cons x (lambda () (f (* x 2)))))])
+    (lambda () (f 2))))
+
       
