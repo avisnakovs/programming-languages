@@ -18,5 +18,3 @@
   (if (null? xs)
       null
       (cons (f (car xs)) (my-map f (cdr xs)))))
-
-(define (fact x) (if (= x 0) 1 (* x (fact (- x 1))))) 
