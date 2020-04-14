@@ -7,7 +7,7 @@
 ;; Uncomment the line below and change HOMEWORK_FILE to the name of your homework file.
 ;;(require "HOMEWORK_FILE")
 
-(require rackunit)
+(require rackunit "hw4.rkt")
 
 ;; Helper functions
 (define ones (lambda () (cons 1 ones)))
@@ -21,12 +21,12 @@
    (check-equal? (sequence 0 5 1) (list 0 1 2 3 4 5) "Sequence test")
 
    ; string-append-map test
-;   (check-equal? (string-append-map 
-;                  (list "dan" "dog" "curry" "dog2") 
-;                  ".jpg") '("dan.jpg" "dog.jpg" "curry.jpg" "dog2.jpg") "string-append-map test")
+   (check-equal? (string-append-map 
+                  (list "dan" "dog" "curry" "dog2") 
+                  ".jpg") '("dan.jpg" "dog.jpg" "curry.jpg" "dog2.jpg") "string-append-map test")
    
    ; list-nth-mod test
-;   (check-equal? (list-nth-mod (list 0 1 2 3 4) 2) 2 "list-nth-mod test")
+   (check-equal? (list-nth-mod (list 0 1 2 3 4) 2) 2 "list-nth-mod test")
    
    ; stream-for-n-steps test
 ;   (check-equal? (stream-for-n-steps ones 2) (list 1 1) "stream-for-n-steps test")
