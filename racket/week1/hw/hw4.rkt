@@ -57,6 +57,18 @@
     (lambda () (f 0))))
 
 
+(define (vector-assoc v vec)
+  (letrec ([f (lambda (n)
+                (if (< n (vector-length vec))
+                    (letrec ([val (vector-ref vec n)])
+                      (if (and (pair? val) (= v (car val)))
+                          val
+                          (f (+ 1 n))))
+                    #f))])
+    (f 0)))
+                         
+                              
+                          
 
 
 
