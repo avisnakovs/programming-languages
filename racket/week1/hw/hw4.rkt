@@ -36,4 +36,17 @@
   (letrec ([f (lambda (x) (cons x (lambda () (f (* x 2)))))])
     (lambda () (f 2))))
 
+
+
+(define funny-number-stream
+  (letrec ([f (lambda (x) (cons (negate-fives x) (lambda () (f (+ 1 x)))))])
+    (lambda () (f 1))))
+
+(define (negate-fives x)
+  (if (= 0 (remainder x 5)) (- x) x))
+
+
+
+
+  
       

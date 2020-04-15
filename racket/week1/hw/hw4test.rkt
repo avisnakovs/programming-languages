@@ -32,7 +32,7 @@
    (check-equal? (stream-for-n-steps ones 2) (list 1 1) "stream-for-n-steps test")
    
    ; funny-number-stream test
-;   (check-equal? (stream-for-n-steps funny-number-stream 16) (list 1 2 3 4 -5 6 7 8 9 -10 11 12 13 14 -15 16) "funny-number-stream test")
+   (check-equal? (stream-for-n-steps funny-number-stream 16) (list 1 2 3 4 -5 6 7 8 9 -10 11 12 13 14 -15 16) "funny-number-stream test")
    
    ; dan-then-dog test
 ;   (check-equal? (stream-for-n-steps dan-then-dog 1) (list "dan.jpg") "dan-then-dog test")
