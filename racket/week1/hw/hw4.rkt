@@ -24,6 +24,8 @@
           (car xs)
           (nth (cdr xs) n (+ acc 1)))))
 
+
+
 (define (stream-for-n-steps s n)
   (letrec ([f (lambda (stream seq acc)
                 (let ([pr (stream)])
@@ -31,11 +33,6 @@
                       null
                       (cons acc (f (cdr pr) (+ seq 1) (car pr))))))])
     (f (cdr (s)) 0 (car (s)))))
-
-(define powers-of-two
-  (letrec ([f (lambda (x) (cons x (lambda () (f (* x 2)))))])
-    (lambda () (f 2))))
-
 
 
 (define funny-number-stream
@@ -47,6 +44,24 @@
 
 
 
+(define dan-then-dog
+  (letrec ([dan (lambda () (cons "dan.jpg" dog))]
+           [dog (lambda () (cons "dog.jpg" dan))])
+    dan))
 
-  
+(define (stream-add-zero s)
+  (lambda () (cons (cons 0 (car (s))) (stream-add-zero (cdr (s))))))
+
+(define (cycle-lists xs ys)
+  (letrec ([f (lambda (n) (cons (cons (list-nth-mod xs n) (list-nth-mod ys n)) (lambda () (f (+ 1 n)))))])
+    (lambda () (f 0))))
+
+
+
+
+
+
+
+
+
       
