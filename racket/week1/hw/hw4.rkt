@@ -84,9 +84,12 @@
                          val)))))))
 
 
-
-
-
+(define-syntax while-less
+  (syntax-rules (do)
+    [(while-less e1 do e2)
+     (letrec ([first e1]
+              [f (lambda () (if (< e2 first) (f) #t))])
+       (f))]))
 
 
 
