@@ -67,8 +67,22 @@
                     #f))])
     (f 0)))
                          
-                              
-                          
+
+(define cache (mcons 0 #f))
+
+(define (cached-assoc xs n)
+  (begin 
+   (set-mcdr! cache (make-vector (length xs) #f))
+   (lambda (n) (letrec ([c (vector-assoc n (mcdr cache))]
+                           [xsv (list->vector xs)])
+                 (if (and c (= n (car c)))
+                     c
+                     (letrec ([val (vector-assoc n xsv)])
+                       (begin
+                         (vector-set! (mcdr cache) (mcar cache) val)
+                         (set-mcar! cache (remainder (+ 1 (mcar cache)) (vector-length (mcdr cache))))
+                         val)))))))
+
 
 
 
