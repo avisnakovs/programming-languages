@@ -20,7 +20,9 @@
    (check-equal? (mupllist->racketlist (apair (int 3) (apair (int 4) (aunit)))) (list (int 3) (int 4)) "racketlist->mupllist test")
 
    ;; tests if ifgreater returns (int 2)
-   ;(check-equal? (eval-exp (ifgreater (int 3) (int 4) (int 3) (int 2))) (int 2) "ifgreater test")
+   (check-equal? (eval-exp (ifgreater (int 3) (int 4) (int 3) (int 2))) (int 2) "ifgreater test")
+   (check-equal? (eval-exp (ifgreater (int 4) (int 1) (int 3) (int 2))) (int 3) "ifgreater test")
+   ;(check-exn exn:not-int? (lambda () (eval-exp (ifgreater (aunit) (int 1) (int 3) (int 2)))) "ifgreater exception")
    
    ;; mlet test
    ;(check-equal? (eval-exp (mlet "x" (int 1) (add (int 5) (var "x")))) (int 6) "mlet test")
@@ -56,5 +58,4 @@
    ))
 
 (require rackunit/text-ui)
-;; runs the test
 (run-tests tests)

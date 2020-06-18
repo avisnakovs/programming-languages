@@ -27,8 +27,6 @@
       (aunit)
       (apair (car l) (racketlist->mupllist (cdr l))))) 
 
-;; CHANGE (put your solutions here)
-
 (define (mupllist->racketlist l)
   (if (aunit? l)
       null
@@ -58,6 +56,10 @@
                (int (+ (int-num v1) 
                        (int-num v2)))
                (error "MUPL addition applied to non-number")))]
+        [(ifgreater? e)
+         (let ([e1 (int-num (ifgreater-e1 e))]
+               [e2 (int-num (ifgreater-e2 e))])
+           (if (> e1 e2) (ifgreater-e3 e) (ifgreater-e4 e)))]
         ;; CHANGE add more cases here
         [#t (error (format "bad MUPL expression: ~v" e))]))
 
@@ -97,3 +99,11 @@
 ;; Do NOT change this
 (define (eval-exp-c e)
   (eval-under-env-c (compute-free-vars e) null))
+
+
+(struct exn:not-int exn:fail ()) ; subtype of `exn:fail`
+
+(define (raise-not-int-error value)
+  (raise (exn:not-int
+          (format "required int, got ~v" value)
+          (current-continuation-marks))))
