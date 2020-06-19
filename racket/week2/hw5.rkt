@@ -71,6 +71,14 @@
            (eval-under-env (mlet-body e) (cons (cons (mlet-var e) val) env)))]
         ; int
         [(int? e) e]
+        ; call
+        [(call? e)
+         (if (not (closure? (call-funexp e)))
+             (error "MUPL call applied to non-closure")
+             (let ([param (eval-under-env (call-actual e) env)]
+                   [closureEnv (closure-env (call-funexp e))]
+                   [fn (closure-fun (call-funexp e))])
+               (eval-under-env (fun-body fn) (cons (cons (fun-formal fn) param) closureEnv))))]  
         [#t (error (format "bad MUPL expression: ~v" e))]))
 
 ;; Do NOT change
