@@ -22,7 +22,8 @@
    ;; tests if ifgreater returns (int 2)
    (check-equal? (eval-exp (ifgreater (int 3) (int 4) (int 3) (int 2))) (int 2) "ifgreater test")
    (check-equal? (eval-exp (ifgreater (int 4) (int 1) (int 3) (int 2))) (int 3) "ifgreater test")
-   ;(check-exn exn:not-int? (lambda () (eval-exp (ifgreater (aunit) (int 1) (int 3) (int 2)))) "ifgreater exception")
+   (check-equal? (eval-exp (ifgreater (int 1) (int 1) (var "foo") (var "huy"))) (var "huy") "ifgreater test")
+   ;(check-equal? (eval-exp (ifgreater (aunit) (int 1) (var "foo") (int 2))) (var "foo") "ifgreater test")
    
    ;; mlet test
    ;(check-equal? (eval-exp (mlet "x" (int 1) (add (int 5) (var "x")))) (int 6) "mlet test")
