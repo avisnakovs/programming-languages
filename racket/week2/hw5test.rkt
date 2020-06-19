@@ -26,7 +26,13 @@
    ;(check-equal? (eval-exp (ifgreater (aunit) (int 1) (var "foo") (int 2))) (var "foo") "ifgreater test")
    
    ;; mlet test
-   ;(check-equal? (eval-exp (mlet "x" (int 1) (add (int 5) (var "x")))) (int 6) "mlet test")
+   (check-equal? (eval-exp (mlet "x" (int 1) (add (int 5) (var "x")))) (int 6) "mlet test")
+   (check-equal? (eval-under-env (mlet "x" (int 1) (add (int 5) (var "x"))) (cons "x" 1729)) (int 6) "mlet test")
+   (check-equal? (eval-under-env (mlet "x" (int 1) (add (var "y") (var "x"))) (cons (cons "y" (int 13)) null)) (int 14) "mlet test")
+   (check-equal? (eval-exp (mlet "x" (int 1) (add (var "x") (var "x")))) (int 2) "mlet test")
+
+
+
    
    ;; call test
    ;(check-equal? (eval-exp (call (closure '() (fun #f "x" (add (var "x") (int 7)))) (int 1))) (int 8) "call test")

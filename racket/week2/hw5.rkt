@@ -46,8 +46,10 @@
 ;; We will test eval-under-env by calling it directly even though
 ;; "in real life" it would be a helper function of eval-exp.
 (define (eval-under-env e env)
-  (cond [(var? e) 
+        ; var
+  (cond [(var? e)
          (envlookup env (var-string e))]
+        ; add
         [(add? e) 
          (let ([v1 (eval-under-env (add-e1 e) env)]
                [v2 (eval-under-env (add-e2 e) env)])
@@ -56,12 +58,19 @@
                (int (+ (int-num v1) 
                        (int-num v2)))
                (error "MUPL addition applied to non-number")))]
+        ;ifgreater
         [(ifgreater? e)
          (let ([e1 (ifgreater-e1 e)]
                [e2 (ifgreater-e2 e)])
            (if (and (int? e1) (int? e2))
                (if (> (int-num e1) (int-num e2)) (ifgreater-e3 e) (ifgreater-e4 e))
                (error "MUPL ifgreater applied to non-number")))]
+        ; mlet
+        [(mlet? e)
+         (let ([val (eval-under-env (mlet-e e) env)])
+           (eval-under-env (mlet-body e) (cons (cons (mlet-var e) val) env)))]
+        ; int
+        [(int? e) e]
         [#t (error (format "bad MUPL expression: ~v" e))]))
 
 ;; Do NOT change
