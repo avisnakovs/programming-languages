@@ -75,10 +75,11 @@
         [(call? e)
          (if (not (closure? (call-funexp e)))
              (error "MUPL call applied to non-closure")
-             (let ([param (eval-under-env (call-actual e) env)]
-                   [closureEnv (closure-env (call-funexp e))]
-                   [fn (closure-fun (call-funexp e))])
-               (eval-under-env (fun-body fn) (cons (cons (fun-formal fn) param) closureEnv))))]  
+             (let* ([fn (closure-fun (call-funexp e))]
+                    [param (eval-under-env (call-actual e) env)]
+                    [closureEnv (if (fun-nameopt fn) env (closure-env (call-funexp e)))]
+                    [usedEnv (if (not (fun-formal fn)) closureEnv (cons (cons (fun-formal fn) param) closureEnv))])
+               (eval-under-env (fun-body fn) usedEnv)))]
         [#t (error (format "bad MUPL expression: ~v" e))]))
 
 ;; Do NOT change
