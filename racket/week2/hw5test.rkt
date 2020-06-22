@@ -40,11 +40,16 @@
 
    (check-equal? (eval-under-env (call (closure (list (cons "y" (int 1729))) (fun #t "x" (add (var "x") (var "y")))) (int 1)) (list (cons "y" (int 13)))) (int 14) "call test")
 
+   ;apair
+   (check-equal? (eval-exp (apair (add (int 1) (int 2)) (add (int 3) (int 4)))) (apair (int 3) (int 7)) "apair test")
 
-   (check-equal? (eval-exp (apair (add (int 1) (int 2)) (add (int 3) (int 4)))) (apair (int 3) (int 7)) "call test")
-
+   ;fst
+   (check-equal? (eval-exp (fst (apair (int 1) (int 2)))) (int 1) "fst test")
+   
    ;;snd test
-   ;(check-equal? (eval-exp (snd (apair (int 1) (int 2)))) (int 2) "snd test")
+   (check-equal? (eval-exp (snd (apair (int 1) (add (int 13) (int 2))))) (int 15) "snd test")
+   (check-equal? (eval-exp (snd (apair (add (int 1) (int 2)) (int 2)))) (int 2) "snd test")
+
    
    ;; isaunit test
    ;(check-equal? (eval-exp (isaunit (closure '() (fun #f "x" (aunit))))) (int 0) "isaunit test")

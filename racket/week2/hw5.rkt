@@ -84,6 +84,16 @@
          (let ([v1 (eval-under-env (apair-e1 e) env)]
                [v2 (eval-under-env (apair-e2 e) env)])
            (apair v1 v2))]
+        [(fst? e)
+         (let ([p (eval-under-env (fst-e e) env)])
+           (if (apair? p)
+               (apair-e1 p)
+               (error "MUPL fst applied to not-apair")))]
+        [(snd? e)
+         (let ([p (eval-under-env (snd-e e) env)])
+           (if (apair? p)
+               (apair-e2 p)
+               (error "MUPL fst applied to not-apair")))]
         [#t (error (format "bad MUPL expression: ~v" e))]))
 
 ;; Do NOT change
