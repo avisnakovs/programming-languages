@@ -80,6 +80,10 @@
                     [closureEnv (if (fun-nameopt fn) env (closure-env (call-funexp e)))]
                     [usedEnv (if (not (fun-formal fn)) closureEnv (cons (cons (fun-formal fn) param) closureEnv))])
                (eval-under-env (fun-body fn) usedEnv)))]
+        [(apair? e)
+         (let ([v1 (eval-under-env (apair-e1 e) env)]
+               [v2 (eval-under-env (apair-e2 e) env)])
+           (apair v1 v2))]
         [#t (error (format "bad MUPL expression: ~v" e))]))
 
 ;; Do NOT change

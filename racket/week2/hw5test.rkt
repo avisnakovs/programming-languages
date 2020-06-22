@@ -38,13 +38,11 @@
    (check-equal? (eval-exp (call (closure '() (fun #f #f (add (int 3) (int 7)))) (int 0))) (int 10) "call test")
 
 
-   (check-equal? (eval-under-env (call (closure (cons "y" 13) (fun #t "x" (add (var "x") (var "y")))) (int 1)) (cons "y" 13)) (int 14) "call test")
+   (check-equal? (eval-under-env (call (closure (list (cons "y" (int 1729))) (fun #t "x" (add (var "x") (var "y")))) (int 1)) (list (cons "y" (int 13)))) (int 14) "call test")
 
 
-   ;(check-equal? (eval-exp (call (int 2) (int 1))) (int 1730) "call test")
+   (check-equal? (eval-exp (apair (add (int 1) (int 2)) (add (int 3) (int 4)))) (apair (int 3) (int 7)) "call test")
 
-
-   
    ;;snd test
    ;(check-equal? (eval-exp (snd (apair (int 1) (int 2)))) (int 2) "snd test")
    
