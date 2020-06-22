@@ -94,6 +94,11 @@
            (if (apair? p)
                (apair-e2 p)
                (error "MUPL fst applied to not-apair")))]
+        [(isaunit? e)
+         (let ([exp (eval-under-env (isaunit-e e) env)])
+           (if (aunit? exp) (int 1) (int 0)))]
+        [(aunit? e) e]
+        [(closure? e) e]
         [#t (error (format "bad MUPL expression: ~v" e))]))
 
 ;; Do NOT change
