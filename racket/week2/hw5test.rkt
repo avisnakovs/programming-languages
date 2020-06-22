@@ -22,7 +22,7 @@
    ;; tests if ifgreater returns (int 2)
    (check-equal? (eval-exp (ifgreater (int 3) (int 4) (int 3) (int 2))) (int 2) "ifgreater test")
    (check-equal? (eval-exp (ifgreater (int 4) (int 1) (int 3) (int 2))) (int 3) "ifgreater test")
-   (check-equal? (eval-exp (ifgreater (int 1) (int 1) (var "foo") (var "huy"))) (var "huy") "ifgreater test")
+   (check-equal? (eval-under-env (ifgreater (int 1) (int 1) (var "foo") (var "huy")) (cons (cons "huy" (int 13)) null)) (int 13) "ifgreater test")
    ;(check-equal? (eval-exp (ifgreater (aunit) (int 1) (var "foo") (int 2))) (var "foo") "ifgreater test")
    
    ;; mlet test
@@ -66,8 +66,9 @@
    (check-equal? (eval-exp (mlet* (list (cons "x" (int 10)) (cons "y" (int 6))) (add (var "x") (var "y")))) (int 16) "mlet* test")
    
    ;; ifeq test
-   ;(check-equal? (eval-exp (ifeq (int 1) (int 2) (int 3) (int 4))) (int 4) "ifeq test")
-   
+   (check-equal? (eval-exp (ifeq (int 1) (int 2) (int 3) (int 4))) (int 4) "ifeq test")
+   (check-equal? (eval-exp (ifeq (int 1) (int 1) (int 3) (int 4))) (int 3) "ifeq test")
+
    ;; mupl-map test
    ;(check-equal? (eval-exp (call (call mupl-map (fun #f "x" (add (var "x") (int 7)))) (apair (int 1) (aunit)))) 
    ;              (apair (int 8) (aunit)) "mupl-map test")
