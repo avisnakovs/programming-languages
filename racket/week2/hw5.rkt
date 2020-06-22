@@ -60,8 +60,8 @@
                (error "MUPL addition applied to non-number")))]
         ;ifgreater
         [(ifgreater? e)
-         (let ([e1 (ifgreater-e1 e)]
-               [e2 (ifgreater-e2 e)])
+         (let ([e1 (eval-under-env (ifgreater-e1 e) env)]
+               [e2 (eval-under-env (ifgreater-e2 e) env)])
            (if (and (int? e1) (int? e2))
                (if (> (int-num e1) (int-num e2)) (ifgreater-e3 e) (ifgreater-e4 e))
                (error "MUPL ifgreater applied to non-number")))]
@@ -80,24 +80,30 @@
                     [closureEnv (if (fun-nameopt fn) env (closure-env (call-funexp e)))]
                     [usedEnv (if (not (fun-formal fn)) closureEnv (cons (cons (fun-formal fn) param) closureEnv))])
                (eval-under-env (fun-body fn) usedEnv)))]
+        ; apair
         [(apair? e)
          (let ([v1 (eval-under-env (apair-e1 e) env)]
                [v2 (eval-under-env (apair-e2 e) env)])
            (apair v1 v2))]
+        ; fst
         [(fst? e)
          (let ([p (eval-under-env (fst-e e) env)])
            (if (apair? p)
                (apair-e1 p)
                (error "MUPL fst applied to not-apair")))]
+        ; snd
         [(snd? e)
          (let ([p (eval-under-env (snd-e e) env)])
            (if (apair? p)
                (apair-e2 p)
                (error "MUPL fst applied to not-apair")))]
+        ; isaunit
         [(isaunit? e)
          (let ([exp (eval-under-env (isaunit-e e) env)])
            (if (aunit? exp) (int 1) (int 0)))]
+        ; aunit
         [(aunit? e) e]
+        ; clusure
         [(closure? e) e]
         [#t (error (format "bad MUPL expression: ~v" e))]))
 
@@ -107,7 +113,7 @@
         
 ;; Problem 3
 
-(define (ifaunit e1 e2 e3) "CHANGE")
+(define (ifaunit e1 e2 e3) (ifgreater (isaunit e1) (int 0) e2 e3))
 
 (define (mlet* lstlst e2) "CHANGE")
 
