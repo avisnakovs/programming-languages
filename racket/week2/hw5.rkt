@@ -60,10 +60,10 @@
                (error "MUPL addition applied to non-number")))]
         ;ifgreater
         [(ifgreater? e)
-         (let ([e1 (eval-under-env (ifgreater-e1 e) env)]
-               [e2 (eval-under-env (ifgreater-e2 e) env)])
-           (if (and (int? e1) (int? e2))
-               (if (> (int-num e1) (int-num e2)) (ifgreater-e3 e) (ifgreater-e4 e))
+         (let ([v1 (eval-under-env (ifgreater-e1 e) env)]
+               [v2 (eval-under-env (ifgreater-e2 e) env)])
+           (if (and (int? v1) (int? v2))
+               (if (> (int-num v1) (int-num v2)) (ifgreater-e3 e) (ifgreater-e4 e))
                (error "MUPL ifgreater applied to non-number")))]
         ; mlet
         [(mlet? e)
