@@ -36,10 +36,8 @@
    (check-equal? (eval-exp (call (closure (list (cons "y" (int 1729))) (fun #f "x" (add (var "x") (var "y")))) (int 1))) (int 1730) "call test")
    (check-equal? (eval-exp (call (closure '() (fun #f "x" (add (var "x") (int 7)))) (int 1))) (int 8) "call test")
    (check-equal? (eval-exp (call (closure '() (fun #f #f (add (int 3) (int 7)))) (int 0))) (int 10) "call test")
-
-
-   (check-equal? (eval-under-env (call (closure (list (cons "y" (int 1729))) (fun #t "x" (add (var "x") (var "y")))) (int 1)) (list (cons "y" (int 13)))) (int 14) "call test")
-
+   (check-equal? (eval-exp (call (call (fun #f "x" (fun #t "y" (add (var "x") (var "y")))) (int 1)) (int 2))) (int 3) "call test")
+   
    ;apair
    (check-equal? (eval-exp (apair (add (int 1) (int 2)) (add (int 3) (int 4)))) (apair (int 3) (int 7)) "apair test")
 
@@ -71,7 +69,7 @@
 
    ;; mupl-map test
    ;(check-equal? (eval-exp (call (call mupl-map (fun #f "x" (add (var "x") (int 7)))) (apair (int 1) (aunit)))) 
-   ;              (apair (int 8) (aunit)) "mupl-map test")
+    ;             (apair (int 8) (aunit)) "mupl-map test")
    
    ;; problems 1, 2, and 4 combined test
    ;(check-equal? (mupllist->racketlist

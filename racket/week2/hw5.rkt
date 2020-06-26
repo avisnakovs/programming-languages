@@ -75,13 +75,17 @@
         [(int? e) e]
         ; call
         [(call? e)
-         (if (not (closure? (call-funexp e)))
-             (error "MUPL call applied to non-closure")
-             (let* ([fn (closure-fun (call-funexp e))]
-                    [param (eval-under-env (call-actual e) env)]
-                    [closureEnv (if (fun-nameopt fn) env (closure-env (call-funexp e)))]
-                    [usedEnv (if (not (fun-formal fn)) closureEnv (cons (cons (fun-formal fn) param) closureEnv))])
-               (eval-under-env (fun-body fn) usedEnv)))]
+         (let ([cl (eval-under-env (call-funexp e) env)]
+               [param (eval-under-env (call-actual e) env)])
+           (if (not (closure? cl))
+               (error "MUPL call applied to non-closure")
+               (let*([func-name (fun-nameopt (closure-fun cl))]
+                     [arg-name (fun-formal (closure-fun cl))]
+                     [func-body (fun-body (closure-fun cl))]
+                     [bind (if (not func-name)
+                               (list (cons arg-name param))
+                               (append (list (cons arg-name param)) (list (cons func-name cl))))])
+                 (eval-under-env func-body (append bind (closure-env cl))))))]
         ; apair
         [(apair? e)
          (let ([v1 (eval-under-env (apair-e1 e) env)]
@@ -107,6 +111,7 @@
         [(aunit? e) e]
         ; clusure
         [(closure? e) e]
+        [(fun? e) (closure env e)]
         [#t (error (format "bad MUPL expression: ~v" e))]))
 
 ;; Do NOT change
