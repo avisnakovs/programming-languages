@@ -12,7 +12,11 @@ class MyPiece < Piece
 
   # your enhancements here
   def self.next_piece (board)
-    Piece.new(All_My_Pieces.sample, board)
+    MyPiece.new(All_My_Pieces.sample, board)
+  end
+
+  def self.next_cheat_piece (board)
+    MyPiece.new([[0, 0]], board)
   end
 
 end
@@ -28,11 +32,6 @@ class MyBoard < Board
     @delay = 500
   end
 
-  def next_piece
-    @current_block = MyPiece.next_piece(self)
-    @current_pos = nil
-  end
-
   def store_current
     locations = @current_block.current_rotation
     displacement = @current_block.position
@@ -43,6 +42,28 @@ class MyBoard < Board
     }
     remove_filled
     @delay = [@delay - 2, 80].max
+  end
+
+  def set_score(score)
+    @score = score
+  end
+
+  def next_piece
+    if @cheat
+      @current_block = MyPiece.next_cheat_piece(self)
+      @current_pos = nil
+      @cheat = false
+    else
+      @current_block = MyPiece.next_piece(self)
+      @current_pos = nil
+    end
+  end
+
+  def cheat
+    if !@cheat && @score >= 100
+      @score -= 100
+      @cheat = true
+    end
   end
 
 end
@@ -56,17 +77,25 @@ class MyTetris < Tetris
     @canvas.place(@board.block_size * @board.num_rows + 3,
                   @board.block_size * @board.num_columns + 6, 24, 80)
     @board.draw
+    @cheat = false
   end
 
   def key_bindings
     super
     @root.bind('u', proc { self.rotate })
+    @root.bind('c', proc { self.cheat })
   end
 
   def rotate
     @board.rotate_clockwise
     @board.rotate_clockwise
   end
+
+  def cheat
+    @board.cheat
+    update_score
+  end
+
 end
 
 
