@@ -1,28 +1,19 @@
-# University of Washington, Programming Languages, Homework 6, hw6runner.rb
-
-# This is the only file you turn in, so do not modify the other files as
-# part of your solution.
-
 class MyPiece < Piece
 
-  # The constant All_My_Pieces should be declared here
   All_My_Pieces = All_Pieces + [rotations([[0, 0], [1, 0], [0, 1], [1, 1], [2, 1]]),
                                 rotations([[0, 0], [1, 0], [0, 1]]),
                                 rotations([[0, 0], [0, 1], [0, 2], [0, 3], [0, 4]])]
 
-  # your enhancements here
   def self.next_piece (board)
     MyPiece.new(All_My_Pieces.sample, board)
   end
 
   def self.next_cheat_piece (board)
-    MyPiece.new([[0, 0]], board)
+    MyPiece.new([[[0, 0]]], board)
   end
-
 end
 
 class MyBoard < Board
-  # your enhancements here
 
   def initialize (game)
     @grid = Array.new(num_rows) { Array.new(num_columns) }
@@ -44,10 +35,6 @@ class MyBoard < Board
     @delay = [@delay - 2, 80].max
   end
 
-  def set_score(score)
-    @score = score
-  end
-
   def next_piece
     if @cheat
       @current_block = MyPiece.next_cheat_piece(self)
@@ -65,11 +52,9 @@ class MyBoard < Board
       @cheat = true
     end
   end
-
 end
 
 class MyTetris < Tetris
-  # your enhancements here
 
   def set_board
     @canvas = TetrisCanvas.new
@@ -95,7 +80,4 @@ class MyTetris < Tetris
     @board.cheat
     update_score
   end
-
 end
-
-
