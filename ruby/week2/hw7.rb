@@ -166,7 +166,6 @@ class Line < GeometryValue
     @b = b
   end
 
-
   def eval_prog(env)
     self
   end
@@ -202,22 +201,6 @@ class Line < GeometryValue
       Point.new((b - line.b) / (line.m - m), line.m * x + line.b)
     end
   end
-
-  #
-  # end
-  #   then (if real_close(b1,b2)
-  #   then v1 (* same line *)
-  #         else  NoPoints) (* parallel lines do not intersect *)
-  #         else
-  #           let (* one-point intersection *)
-  #           val x = (b2 - b1) / (m1 - m2)
-  #           val y = m1 * x + b1
-  #           in
-  #           Point (x,y)
-  #         end
-  #   super
-  # end
-
 end
 
 class VerticalLine < GeometryValue
@@ -227,6 +210,38 @@ class VerticalLine < GeometryValue
 
   def initialize x
     @x = x
+  end
+
+  def eval_prog(env)
+    self
+  end
+
+  def preprocess_prog
+    self
+  end
+
+  def shift(x, y)
+    VerticalLine.new(self.x + x)
+  end
+
+  def intersect(other)
+    other.intersectVerticalLine self
+  end
+
+  def intersectPoint(point)
+    raise "huy"
+  end
+
+  def intersectLine(line)
+    raise "huy"
+  end
+
+  def intersectVerticalLine(vline)
+    if real_close(vline.x, x)
+      vline
+    else
+      NoPoints.new
+    end
   end
 end
 

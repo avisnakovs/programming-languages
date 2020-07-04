@@ -48,30 +48,18 @@ puts 'Line intersect not working properly' unless ((b2.is_a? Line)) && (b2.m == 
 b3 = b.intersect(Line.new(THREE, FOUR))
 puts 'Line intersect not working properly' unless b3.is_a? NoPoints
 
-# #VerticalLine Tests
-# c = VerticalLine.new(THREE)
-# if not (c.x == THREE)
-# 	puts "VerticalLine not initialized properly"
-# end
-#
-# if not (c.eval_prog([]) == c)
-# 	puts "VerticalLine eval_prog should return self"
-# end
-# if not (c.preprocess_prog == c)
-# 	puts "VerticalLine preprocess_prog should return self"
-# end
-# c1 = c.shift(THREE,FIVE)
-# if not (c1.x == SIX)
-# 	puts "VerticalLine shift not working properly"
-# end
-# c2 = c.intersect(VerticalLine.new(THREE))
-# if not ((c2.is_a? VerticalLine) and c2.x == THREE )
-# 	puts "VerticalLine intersect not working properly"
-# end
-# c3 = c.intersect(VerticalLine.new(FOUR))
-# if not ((c3.is_a? NoPoints))
-# 	puts "VerticalLine intersect not working properly"
-# end
+# VerticalLine Tests
+c = VerticalLine.new(THREE)
+puts 'VerticalLine not initialized properly' if c.x != THREE
+
+puts 'VerticalLine eval_prog should return self' if c.eval_prog([]) != c
+puts 'VerticalLine preprocess_prog should return self' if c.preprocess_prog != c
+c1 = c.shift(THREE, FIVE)
+puts 'VerticalLine shift not working properly' if c1.x != SIX
+c2 = c.intersect(VerticalLine.new(THREE))
+puts 'VerticalLine intersect not working properly' unless (c2.is_a? VerticalLine) && (c2.x == THREE)
+c3 = c.intersect(VerticalLine.new(FOUR))
+puts 'VerticalLine intersect not working properly' unless c3.is_a? NoPoints
 #
 # #LineSegment Tests
 # d = LineSegment.new(ONE,TWO,-THREE,-FOUR)
