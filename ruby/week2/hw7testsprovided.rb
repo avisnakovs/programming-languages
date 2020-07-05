@@ -60,39 +60,35 @@ c2 = c.intersect(VerticalLine.new(THREE))
 puts 'VerticalLine intersect not working properly' unless (c2.is_a? VerticalLine) && (c2.x == THREE)
 c3 = c.intersect(VerticalLine.new(FOUR))
 puts 'VerticalLine intersect not working properly' unless c3.is_a? NoPoints
-#
-# #LineSegment Tests
-# d = LineSegment.new(ONE,TWO,-THREE,-FOUR)
-# if not (d.eval_prog([]) == d)
-# 	puts "LineSegement eval_prog should return self"
-# end
-# d1 = LineSegment.new(ONE,TWO,ONE,TWO)
-# d2 = d1.preprocess_prog
-# if not ((d2.is_a? Point)and d2.x == ONE and d2.y == TWO)
-# 	puts "LineSegment preprocess_prog should convert to a Point"
-# 	puts "if ends of segment are real_close"
-# end
-#
-# d = d.preprocess_prog
-# if not (d.x1 == -THREE and d.y1 == -FOUR and d.x2 == ONE and d.y2 == TWO)
-# 	puts "LineSegment preprocess_prog should make x1 and y1"
-# 	puts "on the left of x2 and y2"
-# end
-#
-# d3 = d.shift(THREE,FIVE)
-# if not (d3.x1 == ZERO and d3.y1 == ONE and d3.x2 == FOUR and d3.y2 == SEVEN)
-# 	puts "LineSegment shift not working properly"
-# end
-#
-# d4 = d.intersect(LineSegment.new(-THREE,-FOUR,ONE,TWO))
-# if not (((d4.is_a? LineSegment)) and d4.x1 == -THREE and d4.y1 == -FOUR and d4.x2 == ONE and d4.y2 == TWO)
-# 	puts "LineSegment intersect not working properly"
-# end
-# d5 = d.intersect(LineSegment.new(TWO,THREE,FOUR,FIVE))
-# if not ((d5.is_a? NoPoints))
-# 	puts "LineSegment intersect not working properly"
-# end
-#
+
+# LineSegment Tests
+d = LineSegment.new(ONE, TWO, -THREE, -FOUR)
+puts 'LineSegement eval_prog should return self' if d.eval_prog([]) != d
+d1 = LineSegment.new(ONE, TWO, ONE, TWO)
+d2 = d1.preprocess_prog
+unless (d2.is_a? Point) && d2.x == ONE && (d2.y == TWO)
+  puts 'LineSegment preprocess_prog should convert to a Point'
+  puts 'if ends of segment are real_close'
+end
+
+d = d.preprocess_prog
+unless (d.x1 == -THREE) && (d.y1 == -FOUR) && (d.x2 == ONE) && (d.y2 == TWO)
+  puts 'LineSegment preprocess_prog should make x1 and y1'
+  puts 'on the left of x2 and y2'
+end
+
+d3 = d.shift(THREE, FIVE)
+unless (d3.x1 == ZERO) && (d3.y1 == ONE) && (d3.x2 == FOUR) && (d3.y2 == SEVEN)
+  puts 'LineSegment shift not working properly'
+end
+
+d4 = d.intersect(LineSegment.new(-THREE, -FOUR, ONE, TWO))
+unless ((d4.is_a? LineSegment)) && (d4.x1 == -THREE) && (d4.y1 == -FOUR) && (d4.x2 == ONE) && (d4.y2 == TWO)
+  puts 'LineSegment intersect not working properly'
+end
+d5 = d.intersect(LineSegment.new(TWO, THREE, FOUR, FIVE))
+puts 'LineSegment intersect not working properly' unless d5.is_a? NoPoints
+
 # #Intersect Tests
 # i = Intersect.new(LineSegment.new(-ONE,-TWO,THREE,FOUR), LineSegment.new(THREE,FOUR,-ONE,-TWO))
 # i1 = i.preprocess_prog.eval_prog([])
