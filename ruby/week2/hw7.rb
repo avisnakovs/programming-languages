@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # University of Washington, Programming Languages, Homework 7, hw7.rb
 # (See also ML code)
 
@@ -154,12 +156,12 @@ class Point < GeometryValue
     end
   end
 
-  def intersectLine(_line)
-    self
+  def intersectLine(line)
+    line.intersectPoint(self)
   end
 
-  def intersectVerticalLine(_vline)
-    self
+  def intersectVerticalLine(vLine)
+    vLine.intersectPoint(self)
   end
 
   def intersectWithSegmentAsLineResult(seg)
@@ -172,7 +174,7 @@ class Point < GeometryValue
 
   def inbetween(v, end1, end2)
     (end1 - GeometryExpression::Epsilon <= v && v <= end2 + GeometryExpression::Epsilon) ||
-      (end2 - GeometryExpression::Epsilon <= v && v <= end1 + GeometryExpression::Epsilon)
+        (end2 - GeometryExpression::Epsilon <= v && v <= end1 + GeometryExpression::Epsilon)
   end
 end
 
@@ -224,8 +226,8 @@ class Line < GeometryValue
     end
   end
 
-  def intersectVerticalLine(_vline)
-    self
+  def intersectVerticalLine(vLine)
+    Point(vLine.x, m * vLine.x + b)
   end
 
   def intersectWithSegmentAsLineResult(seg)
@@ -258,12 +260,16 @@ class VerticalLine < GeometryValue
     other.intersectVerticalLine self
   end
 
-  def intersectPoint(_point)
-    self
+  def intersectPoint(point)
+    if real_close(point.x, x)
+      point
+    else
+      NoPoints.new
+    end
   end
 
-  def intersectLine(_line)
-    self
+  def intersectLine(line)
+    line.intersectVerticalLine(self)
   end
 
   def intersectVerticalLine(vline)
