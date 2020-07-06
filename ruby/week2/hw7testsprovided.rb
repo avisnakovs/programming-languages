@@ -130,3 +130,4 @@ puts 'Let eval_prog should evaluate e2 after adding [s, e1] to the environment' 
 s = Shift.new(THREE, FIVE, LineSegment.new(-ONE, -TWO, THREE, FOUR))
 s1 = s.preprocess_prog.eval_prog([])
 puts 'Shift should shift e by dx and dy' unless (s1.x1 == TWO) && (s1.y1 == THREE) && (s1.x2 == SIX) && (s1.y2 == 9)
+
